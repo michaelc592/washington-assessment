@@ -2,9 +2,20 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "./theme-provider";
+import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Only show the theme toggle after component has mounted to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="w-9 h-9"></div>; // Placeholder with same size
+  }
 
   return (
     <button
